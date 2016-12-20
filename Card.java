@@ -40,7 +40,7 @@ public class Card {
         else if (c == 'J') return 11;
         else if (c == 'Q') return 12;
         else if (c == 'K') return 13;
-        else if (c == 'Q') return 14;
+        else if (c == 'A') return 14;
 
         return -1;
     }
