@@ -23,8 +23,8 @@ import java.util.Comparator;
  * @author Michael <GrubenM@GMail.com>
  */
 public class Card {
-    int val;
-    char suit;
+    private int val;
+    private char suit;
     public Card(String c) {
         val = parseVal(c.charAt(0));
         if (c.charAt(1) != 'S' && c.charAt(1) != 'D' &&
@@ -55,6 +55,13 @@ public class Card {
             else if (a.val > b.val) return 1;
             else return 0;
         }
+    }
+    
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(val);
+        sb.append(suit);
+        return sb.toString();
     }
 
     public int getVal() { return val; }
