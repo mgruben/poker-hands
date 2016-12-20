@@ -52,7 +52,14 @@ public class Card {
         // Obtain the suit
         suit = c.charAt(1);
     }
-
+    
+    /**
+     * Given the single character representing the value of the card,
+     * returns the value of the card.
+     * 
+     * @param c, the character representing the card's value
+     * @return an integer between 2 and 14, inclusive
+     */
     private int parseVal(char c) {
         if (c >= '2' && c <= '9') return Character.getNumericValue(c);
         
@@ -72,7 +79,14 @@ public class Card {
         // If we're here, `c` isn't a valid suit
         else throw new IllegalArgumentException("Invalid suit: " + c);
     }
-
+    
+    /**
+     * @return the value of the card
+     */
     public int getVal() { return val; }
+    
+    /**
+     * @return the suit of the card
+     */
     public char getSuit() { return suit; }
 }
