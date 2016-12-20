@@ -16,7 +16,8 @@ The following is a list of `Hand` ranks, from lowest to highest:
 * Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.
 
 If two `Hands` have the same rank, then the highest value unique to that rank determines which `Hand` is better.  
-Ex.
+
+For example:
 * One Pair: A pair of 3s beats a pair of 2s.
 * Two Pairs: A pair of 9s and a pair of 2s beats a pair of 7s and a pair of 8s.
 * Straight: (5 6 7 8 9) of Hearts beats (2 3 4 5 6) of Diamonds.
