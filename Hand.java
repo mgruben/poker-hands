@@ -94,16 +94,25 @@ public class Hand {
          * but it is assigned its highest-possible rank.
          */
         
-        // Rank 10. Royal Flush
+        /** 
+         * Rank 10. Royal Flush
+         * 
+         * Ten, Jack, Queen, King, Ace, in same suit
+         */
         if (a[10] == 1 && a[11] == 1 && a[12] == 1 && a[13] == 1 && a[14] == 1
                 && sameSuit) {
             tie = 0;
             return 10;
         }
         
-        // Rank 9. Straight Flush
-        // Note that we've already checked from i = 10 to i = 14 above,
-        // and so can stop our search here once i exceeds 9.
+        /**
+         * Rank 9. Straight Flush
+         * 
+         * All cards are consecutive values of same suit
+         * 
+         * Note that we've already checked from i = 10 to i = 14 above,
+         * and so can stop our search here once i exceeds 9.
+         */
         for (int i = 0; i < a.length - 5; i++) {
             count = 0;
             while (a[i] == 1) {
@@ -116,7 +125,11 @@ public class Hand {
             }
         }
         
-        // Rank 8. 4-of-a-kind
+        /**
+         * Rank 8. Four of a Kind
+         * 
+         * Four cards of the same value
+         */
         for (int i = 0; i < a.length; i++) {
             if (a[i] == 4) {
                 tie = i;
@@ -124,7 +137,11 @@ public class Hand {
             }
         }
         
-        // Rank 7. Full House
+        /** 
+         * Rank 7. Full House
+         * 
+         * Three of a kind and a pair
+         */
         boolean triplet = false;
         boolean pair = false;
         for (int i = 0; i < a.length; i++) {
@@ -136,10 +153,18 @@ public class Hand {
             if (pair && triplet) return 7;
         }
         
-        // Rank 6. Flush
+        /** 
+         * Rank 6. Flush
+         * 
+         * All cards of the same suit
+         */
         if (sameSuit) return 6;
         
-        // Rank 5. Straight
+        /**
+         * Rank 5. Straight
+         * 
+         * All cards are consecutive values
+         */
         for (int i = 0; i < a.length - 5; i++) {
             count = 0;
             while (a[i] == 1) {
@@ -152,7 +177,11 @@ public class Hand {
             }
         }
                 
-        // Rank 4. 3-of-a-kind
+        /** 
+         * Rank 4. Three of a Kind
+         * 
+         * Three cards of the same value
+         */
         for (int i = 0; i < a.length; i++) {
             if (a[i] == 3) {
                 tie = i;
@@ -160,7 +189,11 @@ public class Hand {
             }
         }
         
-        // Rank 3. 2 pairs
+        /** 
+         * Rank 3. Two Pairs
+         * 
+         * Two different pairs
+         */
         count = 0;
         for (int i = 0; i < a.length; i++) {
             if (a[i] == 2) {
@@ -169,10 +202,23 @@ public class Hand {
             }
         }
         if (count == 2) return 3;
-        // Rank 2. single pair
+        
+        /**
+         * Rank 2. One Pair
+         * 
+         * Two cards of the same value
+         * 
+         * Recall that we've already summed the number of pairs from above,
+         * so rather than repeat that iteration, we continue the conditional
+         * with an `else` clause here.
+         */
         else if (count == 1) return 2;
         
-        // Rank 1: Highest single card
+        /** 
+         * Rank 1. High Card
+         * 
+         * Highest value card
+         */
         for (int i = a.length - 1; i > -1; i--) {
             if (a[i] > 0) {
                 tie = i;
