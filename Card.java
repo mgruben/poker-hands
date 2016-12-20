@@ -19,30 +19,58 @@ package solution;
 import java.util.Comparator;
 
 /**
- *
+ * A Card object, representing a single card in a poker hand.
  * @author Michael <GrubenM@GMail.com>
  */
 public class Card {
+    
+    // The integer representation of the value of the card
     private int val;
+    
+    // The suit of the card
     private char suit;
+    
+    /**
+     * Given a String of length 2, parses the String to create a Card
+     * matching the value and suit from the String.
+     * 
+     * ex. Card("4H") -> a new Card, value 4, suit Hearts
+     * 
+     * @param c, the length-2 String to parse
+     */
     public Card(String c) {
+        
+        // Obtain the value
         val = parseVal(c.charAt(0));
+        
+        // Check for invalid suit
         if (c.charAt(1) != 'S' && c.charAt(1) != 'D' &&
                 c.charAt(1) != 'C' && c.charAt(1) != 'H') {
             throw new IllegalArgumentException("Invalid suit");
         }
+        
+        // Obtain the suit
         suit = c.charAt(1);
     }
 
     private int parseVal(char c) {
         if (c >= '2' && c <= '9') return Character.getNumericValue(c);
+        
+        /**
+         * Since we want to know about cards being sequential, we adopt
+         * the convention that Jack, Queen, King, and Ace simply continue
+         * the integer values from 10 upwards, respectively.
+         * 
+         * Also, in `poker.txt`, the value 10 is represented with a 'T'.
+         */
         else if (c == 'T') return 10;
         else if (c == 'J') return 11;
         else if (c == 'Q') return 12;
         else if (c == 'K') return 13;
         else if (c == 'A') return 14;
-
-        return -1;
+        
+        // If we're here, `c` isn't a valid suit
+        else throw new IllegalArgumentException("Invalid suit: " + c);
     }
     
     public static Comparator<Card> valueOrder() {
