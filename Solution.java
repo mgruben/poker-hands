@@ -27,6 +27,15 @@ import java.util.logging.Logger;
  * @author Michael <GrubenM@GMail.com>
  */
 public class Solution {
+    
+    /**
+     * Given a line of input from `poker.txt`, which represents two hands,
+     * return whether Player 1's hand is better than Player 2's hand.
+     * @param line, a line of input from `poker.txt`
+     * @return negative if Player 1 loses,
+     *         positive if Player 1 wins, and
+     *         zero otherwise
+     */
     public static int parseLine(String line) {        
         Hand p1 = new Hand(line.substring(0, 14));
         Hand p2 = new Hand(line.substring(15, line.length()));
@@ -36,14 +45,28 @@ public class Solution {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        // Open the given text file
         File f = new File("poker.txt");
+        
+        // Create a scanner to read through the file
         Scanner sc;
+        
+        // The standard Netbeans try-catch block
         try {
+            
+            // The number of games Player 1 has won
             int c = 0;
+            
+            // Initialize our scanner
             sc = new Scanner(f);
+            
+            // Iterate over all games in the text file
             while (sc.hasNext()) {
                 if (Solution.parseLine(sc.nextLine()) > 0) c++;
             }
+            
+            // Print the number of games Player 1 won
             System.out.println(c);
             
         } catch (FileNotFoundException ex) {
