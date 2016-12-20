@@ -16,8 +16,6 @@
  */
 package solution;
 
-import java.util.Comparator;
-
 /**
  * A Card object, representing a single card in a poker hand.
  * @author Michael <GrubenM@GMail.com>
