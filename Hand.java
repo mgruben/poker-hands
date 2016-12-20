@@ -23,8 +23,8 @@ import java.util.Iterator;
  * @author Michael <GrubenM@GMail.com>
  */
 public class Hand implements Iterable<Card> {
-    Card[] h;
-    int len;
+    private Card[] h;
+    private int len;
     int rank;
     
     public Hand() {
@@ -42,13 +42,44 @@ public class Hand implements Iterable<Card> {
         
         for (String c: s.split(" ")) add(new Card(c));
         
-        setRank();
+        rank = parseRank();
     }
     
-    private void setRank() {
+    private int parseRank() {
+        
+        // Build some structures to query
+        int[] a = new int[15];
+        StringBuilder sb = new StringBuilder();
+        for (Card c: h) {
+            a[c.getVal()]++;
+            sb.append(c.getSuit());
+        }
+        String suits = sb.toString();
+        
+        boolean sameSuit = false;
+        
+        if (suits.equals("CCCCC") || suits.equals("SSSSS") ||
+                suits.equals("HHHHH") || suits.equals("DDDDD")) {
+            sameSuit = true;
+        }
+        
         // 10. Royal Flush
+        if (a[10] == 1 && a[11] == 1 && a[12] == 1 && a[13] == 1 && a[14] == 1
+                && sameSuit) {
+            return 10;
+        }
         
         // 9. Straight Flush
+        // Note that we've already checked from i = 10 to i = 14 above,
+        // and so can stop our search here from i = 9 to i = 13.
+        for (int i = 0; i < a.length - 5; i++) {
+            int c = 0;
+            while (a[i] == 1) {
+                c++;
+                i++;
+            }
+            if (c == 5) return 9;
+        }
         
         // 8. 4-of-a-kind
         
@@ -65,6 +96,7 @@ public class Hand implements Iterable<Card> {
         // 2. single pair
         
         // Assign Rank 1
+        return 1;
     }
     
     public void add(Card c) {
