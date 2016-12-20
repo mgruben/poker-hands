@@ -49,6 +49,15 @@ public class Hand {
         rank = parseRank();
     }
     
+    /**
+     * Given a Card c, add that Card to this Hand, if possible
+     * @param c, the Card to add 
+     */
+    private void add(Card c) {
+        if (len == 5) throw new ArrayIndexOutOfBoundsException("Hand is full");
+        else h[len++] = c;
+    }
+    
     private int parseRank() {
         
         int count = 0;
@@ -166,12 +175,4 @@ public class Hand {
         }
         return 0;
     }
-    
-    private void add(Card c) {
-        if (len == 5) throw new ArrayIndexOutOfBoundsException("Hand is full");
-        else h[len++] = c;
-    }
-        
-    
-    
 }
