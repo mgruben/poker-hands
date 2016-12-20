@@ -3,7 +3,7 @@ Find how many winning hands of poker are dealt to Player 1
 
 ### [Background](https://projecteuler.net/problem=54)
 In poker, a `Hand` consists of five `Cards`.  
-The following is a list of `Hand` ranks, from worst to best:  
+The following is a list of `Hand` ranks, from lowest to highest:  
 * High Card: Highest value card.
 * One Pair: Two cards of the same value.
 * Two Pairs: Two different pairs.
@@ -17,12 +17,13 @@ The following is a list of `Hand` ranks, from worst to best:
 
 If two `Hands` have the same rank, then the highest value unique to that rank determines which `Hand` is better.  
 Ex.
-* A pair of 3s beats a pair of 2s.
-* A pair of 9s and a pair of 2s beats a pair of 7s and a pair of 8s.
-* (5 6 7 8 9) of Hearts beats (2 3 4 5 6) of Diamonds
+* One Pair: A pair of 3s beats a pair of 2s.
+* Two Pairs: A pair of 9s and a pair of 2s beats a pair of 7s and a pair of 8s.
+* Straight: (5 6 7 8 9) of Hearts beats (2 3 4 5 6) of Diamonds.
+* Full House: (A A A 2 2) beats (K K K Q Q).
 
 ### Problem Statement
-Given [a list](https://projecteuler.net/project/resources/p054_poker.txt) of 1,000 hands dealt to two players (Player 1 and Player 2), how many winning hands was Player 1 dealt?
+Given [a list](https://projecteuler.net/project/resources/p054_poker.txt) of 1,000 `Hands` dealt to two players (Player 1 and Player 2), how many winning `Hands` was Player 1 dealt?
 
 Below are a few lines from the above list.  
 ```
