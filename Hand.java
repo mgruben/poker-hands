@@ -16,8 +16,6 @@
  */
 package solution;
 
-import java.util.Iterator;
-
 /**
  * A Hand object, representing 5 cards in a game of poker.
  * @author Michael <GrubenM@GMail.com>
