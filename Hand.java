@@ -80,7 +80,7 @@ public class Hand implements Iterable<Card> {
                 count++;
                 i++;
             }
-            if (count == 5) return 9;
+            if (count == 5 && sameSuit) return 9;
         }
         
         // 8. 4-of-a-kind
@@ -101,7 +101,15 @@ public class Hand implements Iterable<Card> {
         if (sameSuit) return 6;
         
         // 5. Straight
-        
+        for (int i = 0; i < a.length - 5; i++) {
+            count = 0;
+            while (a[i] == 1) {
+                count++;
+                i++;
+            }
+            if (count == 5) return 5;
+        }
+                
         // 4. 3-of-a-kind
         
         // 3. 2 pairs
