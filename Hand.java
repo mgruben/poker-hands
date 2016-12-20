@@ -22,7 +22,7 @@ import java.util.Iterator;
  * A Hand object, representing 5 cards in a game of poker.
  * @author Michael <GrubenM@GMail.com>
  */
-public class Hand implements Iterable<Card> {
+public class Hand {
     
     // The structure in which to store our Cards
     private Card[] h;
@@ -167,45 +167,11 @@ public class Hand implements Iterable<Card> {
         return 0;
     }
     
-    public void add(Card c) {
+    private void add(Card c) {
         if (len == 5) throw new ArrayIndexOutOfBoundsException("Hand is full");
         else h[len++] = c;
     }
-
-    @Override
-    public Iterator<Card> iterator() {
-        return new HandIterator();
-    }
-    
-    private class HandIterator implements Iterator<Card> {
-        private int lenCopy;
-        private final Card[] copy;
         
-        private HandIterator() {
-            lenCopy = len;
-            copy = new Card[len];
-            for (int i = 0; i < len; i++) {
-                copy[i] = h[i];
-            }
-        }
-        
-        @Override
-        public boolean hasNext() {
-            return lenCopy > 0;
-        }
-
-        @Override
-        public Card next() {
-            if (!hasNext()) throw new java.util.NoSuchElementException();
-            return copy[--lenCopy];
-        }
-
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
-        
-    }
     
     
 }
