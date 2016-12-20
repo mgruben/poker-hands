@@ -89,6 +89,13 @@ public class Hand implements Iterable<Card> {
         }
         
         // 7. Full House (ahhh ahhh ahh ahh ahhhhh....)
+        boolean triplet = false;
+        boolean pair = false;
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] == 2) pair = true;
+            if (a[i] == 3) triplet = true;
+            if (pair && triplet) return 7;
+        }
         
         // 6. Flush
         
