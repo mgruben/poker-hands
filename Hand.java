@@ -60,9 +60,18 @@ public class Hand {
     
     private int parseRank() {
         
+        // A temporary variable to store counts
         int count = 0;
         
-        // Build some structures to query
+        /**
+         * Because each card has a unique value, and because most of our rank
+         * checking involves whether the cards are in sequence, flatten the
+         * Hand into an array Data Structure, to be able to quickly iterate
+         * through, count duplicates, and find neighbors.
+         * 
+         * At the same time, store the suit of the checked cards, to be able
+         * to tell whether all of the cards are in the same suit.
+         */
         int[] a = new int[15];
         StringBuilder sb = new StringBuilder();
         for (Card c: h) {
@@ -71,23 +80,30 @@ public class Hand {
         }
         String suits = sb.toString();
         
-        // Set our sameSuit flag
+        // Are all of the Cards in this Hand in the same suit?
         boolean sameSuit = false;
         if (suits.equals("CCCCC") || suits.equals("SSSSS") ||
                 suits.equals("HHHHH") || suits.equals("DDDDD")) {
             sameSuit = true;
         }
         
-        // 10. Royal Flush
+        /**
+         * Now, we assign a rank and tie to the hand.
+         * 
+         * Keep in mind that a hand may qualify for multiple valid ranks,
+         * but it is assigned its highest-possible rank.
+         */
+        
+        // Rank 10. Royal Flush
         if (a[10] == 1 && a[11] == 1 && a[12] == 1 && a[13] == 1 && a[14] == 1
                 && sameSuit) {
             tie = 0;
             return 10;
         }
         
-        // 9. Straight Flush
+        // Rank 9. Straight Flush
         // Note that we've already checked from i = 10 to i = 14 above,
-        // and so can stop our search here from i = 9 to i = 13.
+        // and so can stop our search here once i exceeds 9.
         for (int i = 0; i < a.length - 5; i++) {
             count = 0;
             while (a[i] == 1) {
@@ -100,7 +116,7 @@ public class Hand {
             }
         }
         
-        // 8. 4-of-a-kind
+        // Rank 8. 4-of-a-kind
         for (int i = 0; i < a.length; i++) {
             if (a[i] == 4) {
                 tie = i;
@@ -108,7 +124,7 @@ public class Hand {
             }
         }
         
-        // 7. Full House (ahhh ahhh ahh ahh ahhhhh....)
+        // Rank 7. Full House
         boolean triplet = false;
         boolean pair = false;
         for (int i = 0; i < a.length; i++) {
@@ -120,10 +136,10 @@ public class Hand {
             if (pair && triplet) return 7;
         }
         
-        // 6. Flush
+        // Rank 6. Flush
         if (sameSuit) return 6;
         
-        // 5. Straight
+        // Rank 5. Straight
         for (int i = 0; i < a.length - 5; i++) {
             count = 0;
             while (a[i] == 1) {
@@ -136,7 +152,7 @@ public class Hand {
             }
         }
                 
-        // 4. 3-of-a-kind
+        // Rank 4. 3-of-a-kind
         for (int i = 0; i < a.length; i++) {
             if (a[i] == 3) {
                 tie = i;
@@ -144,7 +160,7 @@ public class Hand {
             }
         }
         
-        // 3. 2 pairs
+        // Rank 3. 2 pairs
         count = 0;
         for (int i = 0; i < a.length; i++) {
             if (a[i] == 2) {
@@ -153,10 +169,10 @@ public class Hand {
             }
         }
         if (count == 2) return 3;
-        // 2. single pair
+        // Rank 2. single pair
         else if (count == 1) return 2;
         
-        // Assign Rank 1
+        // Rank 1: Highest single card
         for (int i = a.length - 1; i > -1; i--) {
             if (a[i] > 0) {
                 tie = i;
@@ -166,6 +182,13 @@ public class Hand {
         return 1;
     }
     
+    /**
+     * Does this Hand beat that Hand?
+     * @param that, the Hand played against this hand
+     * @return -1 if that Hand beats this Hand,
+     *          1 if this Hand beats that Hand,
+     *          0 otherwise.
+     */
     public int compareTo(Hand that) {
         if (this.rank < that.rank) return -1;
         else if (this.rank > that.rank) return 1;
