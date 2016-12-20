@@ -22,7 +22,7 @@ import java.util.Comparator;
  * A Card object, representing a single card in a poker hand.
  * @author Michael <GrubenM@GMail.com>
  */
-public class Card {
+public class Card implements Comparable<Card> {
     
     // The integer representation of the value of the card
     private int val;
@@ -73,18 +73,13 @@ public class Card {
         else throw new IllegalArgumentException("Invalid suit: " + c);
     }
     
-    public static Comparator<Card> valueOrder() {
-        return new cardComparator();
+    @Override
+    public int compareTo(Card that) {
+        if (this.val < that.val) return -1;
+        else if (this.val > that.val) return 1;
+        else return 0;
     }
-    public static class cardComparator implements Comparator<Card> {
-        @Override
-        public int compare(Card a, Card b) {
-            if (a.val < b.val) return -1;
-            else if (a.val > b.val) return 1;
-            else return 0;
-        }
-    }
-    
+        
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(val);
