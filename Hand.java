@@ -47,6 +47,8 @@ public class Hand implements Iterable<Card> {
     
     private int parseRank() {
         
+        int count = 0;
+        
         // Build some structures to query
         int[] a = new int[15];
         StringBuilder sb = new StringBuilder();
@@ -56,8 +58,8 @@ public class Hand implements Iterable<Card> {
         }
         String suits = sb.toString();
         
+        // Set our sameSuit flag
         boolean sameSuit = false;
-        
         if (suits.equals("CCCCC") || suits.equals("SSSSS") ||
                 suits.equals("HHHHH") || suits.equals("DDDDD")) {
             sameSuit = true;
@@ -73,15 +75,18 @@ public class Hand implements Iterable<Card> {
         // Note that we've already checked from i = 10 to i = 14 above,
         // and so can stop our search here from i = 9 to i = 13.
         for (int i = 0; i < a.length - 5; i++) {
-            int c = 0;
+            count = 0;
             while (a[i] == 1) {
-                c++;
+                count++;
                 i++;
             }
-            if (c == 5) return 9;
+            if (count == 5) return 9;
         }
         
         // 8. 4-of-a-kind
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] == 4) return 8;
+        }
         
         // 7. Full House (ahhh ahhh ahh ahh ahhhhh....)
         
