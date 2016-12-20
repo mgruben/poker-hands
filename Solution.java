@@ -16,31 +16,40 @@
  */
 package solution;
 
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Michael <GrubenM@GMail.com>
  */
 public class Solution {
-    
+    public static int parseLine(String line) {        
+        Hand p1 = new Hand(line.substring(0, 14));
+        Hand p2 = new Hand(line.substring(15, line.length()));
+        return p1.compareTo(p2);
+    }
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        String h1 = "5H 5C 6S 7S KD 2C 3S 8S 8D TD";
-        
-        Card[] a = new Card[10];
-        int i = 0;
-        for (String s: h1.split(" ")) {
-            a[i++] = new Card(s);
+        File f = new File("poker.txt");
+        Scanner sc;
+        try {
+            int c = 0;
+            sc = new Scanner(f);
+            while (sc.hasNext()) {
+                if (Solution.parseLine(sc.nextLine()) > 0) c++;
+            }
+            System.out.println(c);
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Solution.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Arrays.sort(a, Card.valueOrder());
         
-        for (Card c: a) {
-            System.out.print(c.getVal());
-            System.out.println(c.getSuit());
-        }
     }
     
 }
