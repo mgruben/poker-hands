@@ -25,7 +25,8 @@ import java.util.Iterator;
 public class Hand implements Iterable<Card> {
     private Card[] h;
     private int len;
-    int rank;
+    private int rank;
+    private int tie;
     
     public Hand() {
         len = 0;
@@ -68,6 +69,7 @@ public class Hand implements Iterable<Card> {
         // 10. Royal Flush
         if (a[10] == 1 && a[11] == 1 && a[12] == 1 && a[13] == 1 && a[14] == 1
                 && sameSuit) {
+            tie = 0;
             return 10;
         }
         
@@ -80,12 +82,18 @@ public class Hand implements Iterable<Card> {
                 count++;
                 i++;
             }
-            if (count == 5 && sameSuit) return 9;
+            if (count == 5 && sameSuit) {
+                tie = i;
+                return 9;
+            }
         }
         
         // 8. 4-of-a-kind
         for (int i = 0; i < a.length; i++) {
-            if (a[i] == 4) return 8;
+            if (a[i] == 4) {
+                tie = i;
+                return 8;
+            }
         }
         
         // 7. Full House (ahhh ahhh ahh ahh ahhhhh....)
@@ -93,7 +101,10 @@ public class Hand implements Iterable<Card> {
         boolean pair = false;
         for (int i = 0; i < a.length; i++) {
             if (a[i] == 2) pair = true;
-            if (a[i] == 3) triplet = true;
+            if (a[i] == 3) {
+                tie = i;
+                triplet = true;
+            }
             if (pair && triplet) return 7;
         }
         
@@ -107,25 +118,50 @@ public class Hand implements Iterable<Card> {
                 count++;
                 i++;
             }
-            if (count == 5) return 5;
+            if (count == 5) {
+                tie = i;
+                return 5;
+            }
         }
                 
         // 4. 3-of-a-kind
         for (int i = 0; i < a.length; i++) {
-            if (a[i] == 3) return 4;
+            if (a[i] == 3) {
+                tie = i;
+                return 4;
+            }
         }
         
         // 3. 2 pairs
         count = 0;
         for (int i = 0; i < a.length; i++) {
-            if (a[i] == 2) count++;
+            if (a[i] == 2) {
+                tie = i;
+                count++;
+            }
         }
         if (count == 2) return 3;
         // 2. single pair
         else if (count == 1) return 2;
         
         // Assign Rank 1
+        for (int i = a.length - 1; i > -1; i--) {
+            if (a[i] > 0) {
+                tie = i;
+                break;
+            }
+        }
         return 1;
+    }
+    
+    public int compareTo(Hand that) {
+        if (this.rank < that.rank) return -1;
+        else if (this.rank > that.rank) return 1;
+        else {
+            if (this.tie < that.tie) return -1;
+            else if (this.tie > that.tie) return 1;
+        }
+        return 0;
     }
     
     public void add(Card c) {
