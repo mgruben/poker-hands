@@ -44,7 +44,7 @@ public class Hand {
         
         for (String c: s.split(" ")) add(new Card(c));
         
-        rank = parseRank();
+        parseRank();
     }
     
     /**
@@ -56,7 +56,10 @@ public class Hand {
         else h[len++] = c;
     }
     
-    private int parseRank() {
+    /**
+     * Assuming a 5-Card Hand, sets the rank and tie metrics for this Hand.
+     */
+    private void parseRank() {
         
         // A temporary variable to store counts
         int count = 0;
@@ -100,7 +103,8 @@ public class Hand {
         if (a[10] == 1 && a[11] == 1 && a[12] == 1 && a[13] == 1 && a[14] == 1
                 && sameSuit) {
             tie = 0;
-            return 10;
+            rank = 10;
+            return;
         }
         
         /**
@@ -119,7 +123,8 @@ public class Hand {
             }
             if (count == 5 && sameSuit) {
                 tie = i;
-                return 9;
+                rank = 9;
+                return;
             }
         }
         
@@ -131,7 +136,8 @@ public class Hand {
         for (int i = 0; i < a.length; i++) {
             if (a[i] == 4) {
                 tie = i;
-                return 8;
+                rank = 8;
+                return;
             }
         }
         
@@ -148,7 +154,10 @@ public class Hand {
                 tie = i;
                 triplet = true;
             }
-            if (pair && triplet) return 7;
+            if (pair && triplet) {
+                rank =  7;
+                return;
+            }
         }
         
         /** 
@@ -156,7 +165,10 @@ public class Hand {
          * 
          * All cards of the same suit
          */
-        if (sameSuit) return 6;
+        if (sameSuit) {
+            rank = 6;
+            return;
+        }
         
         /**
          * Rank 5. Straight
@@ -171,7 +183,8 @@ public class Hand {
             }
             if (count == 5) {
                 tie = i;
-                return 5;
+                rank = 5;
+                return;
             }
         }
                 
@@ -183,7 +196,8 @@ public class Hand {
         for (int i = 0; i < a.length; i++) {
             if (a[i] == 3) {
                 tie = i;
-                return 4;
+                rank = 4;
+                return;
             }
         }
         
@@ -199,7 +213,10 @@ public class Hand {
                 count++;
             }
         }
-        if (count == 2) return 3;
+        if (count == 2) {
+            rank = 3;
+            return;
+        }
         
         /**
          * Rank 2. One Pair
@@ -210,7 +227,10 @@ public class Hand {
          * so rather than repeat that iteration, we continue the conditional
          * with an `else` clause here.
          */
-        else if (count == 1) return 2;
+        else if (count == 1) {
+            rank = 2;
+            return;
+        }
         
         /** 
          * Rank 1. High Card
@@ -223,7 +243,7 @@ public class Hand {
                 break;
             }
         }
-        return 1;
+        rank = 1;
     }
     
     /**
