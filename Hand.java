@@ -19,13 +19,21 @@ package solution;
 import java.util.Iterator;
 
 /**
- *
+ * A Hand object, representing 5 cards in a game of poker.
  * @author Michael <GrubenM@GMail.com>
  */
 public class Hand implements Iterable<Card> {
+    
+    // The structure in which to store our Cards
     private Card[] h;
+    
+    // How many cards are currently in this Hand?
     private int len;
+    
+    // The primitive to represent which Hand beats which
     private int rank;
+    
+    // The primitive to break ties, for Hands of the same rank
     private int tie;
     
     public Hand() {
