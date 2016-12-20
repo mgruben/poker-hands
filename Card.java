@@ -22,7 +22,7 @@ import java.util.Comparator;
  * A Card object, representing a single card in a poker hand.
  * @author Michael <GrubenM@GMail.com>
  */
-public class Card implements Comparable<Card> {
+public class Card {
     
     // The integer representation of the value of the card
     private int val;
@@ -71,20 +71,6 @@ public class Card implements Comparable<Card> {
         
         // If we're here, `c` isn't a valid suit
         else throw new IllegalArgumentException("Invalid suit: " + c);
-    }
-    
-    @Override
-    public int compareTo(Card that) {
-        if (this.val < that.val) return -1;
-        else if (this.val > that.val) return 1;
-        else return 0;
-    }
-        
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(val);
-        sb.append(suit);
-        return sb.toString();
     }
 
     public int getVal() { return val; }
