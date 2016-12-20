@@ -35,12 +35,7 @@ public class Hand implements Iterable<Card> {
     
     // The primitive to break ties, for Hands of the same rank
     private int tie;
-    
-    public Hand() {
-        len = 0;
-        h = new Card[5];
-    }
-    
+        
     /**
      * Given a String representing a full hand (5 cards), construct that Hand
      * @param s 
