@@ -111,10 +111,18 @@ public class Hand implements Iterable<Card> {
         }
                 
         // 4. 3-of-a-kind
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] == 3) return 4;
+        }
         
         // 3. 2 pairs
-        
+        count = 0;
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] == 2) count++;
+        }
+        if (count == 2) return 3;
         // 2. single pair
+        else if (count == 1) return 2;
         
         // Assign Rank 1
         return 1;
