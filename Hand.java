@@ -98,6 +98,7 @@ public class Hand implements Iterable<Card> {
         }
         
         // 6. Flush
+        if (sameSuit) return 6;
         
         // 5. Straight
         
